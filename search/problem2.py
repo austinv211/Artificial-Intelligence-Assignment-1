@@ -58,7 +58,7 @@ def ucs(graph: Dict[str, set], start: str, end: str, weights: Dict[Tuple[str, st
     frontier = PriorityQueue()
     frontier.put((0, start, []))  # (priority, node, path)
     explored = []
-    while True:
+    while not frontier.empty():
         ucs_w, current_node, path = frontier.get()
         explored.append(current_node)
         if current_node == end:
@@ -73,7 +73,7 @@ def ucs(graph: Dict[str, set], start: str, end: str, weights: Dict[Tuple[str, st
 
 
 if __name__ == "__main__":
-    dfs_result = next(dfs_paths(graph, 'S', 'G'))
-    bfs_result = next(bfs_paths(graph, 'S', 'G'))
-    ucs_result, ucs_w = next(ucs(graph, 'S', 'G', weights))
-    print(f'DFS: {dfs_result}\nBFS: {bfs_result}\nUCS: {ucs_result} with a cost of {ucs_w}')
+    dfs_result = list(islice(dfs_paths(graph, 'S', 'G'), len(graph.items())))
+    bfs_result = list(bfs_paths(graph, 'S', 'G'))
+    test = list(ucs(graph, 'S', 'G', weights))
+    print(f'DFS: {dfs_result}\nBFS: {bfs_result}\nUCS: {test}')
